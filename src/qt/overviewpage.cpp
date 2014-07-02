@@ -13,7 +13,7 @@
 #include <QPainter>
 #include <QDesktopServices>
 #include <QUrl>
-#include <QWebView>
+//#include <QWebView>
 
 #define DECORATION_SIZE 64
 #define NUM_ITEMS 3

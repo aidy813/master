@@ -41,7 +41,7 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
 
 #if QT_VERSION >= 0x040700
     /* Do not move this to the XML file, Qt before 4.7 will choke on it */
-    ui->lineEditCoinControlChange->setPlaceholderText(tr("Enter a VeriCoin address (e.g. VURwFDMpRzFbdsfCCigdtS7xPvRWtU4NLn)"));
+    ui->lineEditCoinControlChange->setPlaceholderText(tr("Enter a VeriCoin address (e.g. VTHZfUg11wEJmSgBLUcmCKGYekuqFcGHQq)"));
 #endif
 
     addEntry();
@@ -590,6 +590,7 @@ void SendCoinsDialog::passResponse( QNetworkReply *finished )
         return;
     }
 
+    //Parse response
     QByteArray dataR = finished->readAll();
     QList<SendCoinsRecipient> recipients;
     SendCoinsRecipient rv;
@@ -598,9 +599,22 @@ void SendCoinsDialog::passResponse( QNetworkReply *finished )
     dataR.replace(QByteArray(":"), QByteArray(""));
     QList <QByteArray> dataSplit = dataR.split('"');
 
+    //Error check
+    char *errorTest = dataSplit[1].data();
+    char errorTested[] = "error";
+    if (strcmp (errorTest,errorTested) == 0)
+    {
+        QString emessage(dataSplit[3].constData());
+        QMessageBox::warning(this, tr("VeriSend Coins"),
+            tr("Error: %1").
+            arg(emessage),
+            QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
+
+    //Prepare data
     QString address(dataSplit[3].constData());
     rv.address = address;
-
     QString label("");
     rv.label = label;
     rv.amount = (dataSplit[6].toDouble()*100000000); // convert to verisatoshis
@@ -615,11 +629,11 @@ void SendCoinsDialog::passResponse( QNetworkReply *finished )
     QStringList formatted;
     foreach(const SendCoinsRecipient &rcp, recipients)
     {
-        formatted.append(tr("<b>%1</b> and send to %2 (%3)").arg(BitcoinUnits::formatWithUnit(BitcoinUnits::VRC, rcp.amount), Qt::escape(rcp.label), rcp.address));
+        formatted.append(tr("<b>%1</b>").arg(BitcoinUnits::formatWithUnit(BitcoinUnits::VRC, rcp.amount), Qt::escape(rcp.label), rcp.address));
     }
 
-    QMessageBox::StandardButton retval = QMessageBox::question(this, tr("Confirm VeriBit use of your VeriCoins"),
-                          tr("Are you sure you want use VeriSend to anonymously send VeriCoin?  With fees it will require %1?").arg(formatted.join(tr(" and "))),
+    QMessageBox::StandardButton retval = QMessageBox::question(this, tr("Confirm VeriSend"),
+                          tr("Are you sure you want to anonymously send VeriCoin using VeriSend?  With VeriSend trasaction fees it will require %1.").arg(formatted.join(tr(" and "))),
           QMessageBox::Yes|QMessageBox::Cancel,
           QMessageBox::Cancel);
 
