@@ -1,14 +1,14 @@
 TEMPLATE = app
 TARGET = vericoin-qt
-VERSION = 1.3
+VERSION = 1.3.2
 INCLUDEPATH += src src/json src/qt
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
 CONFIG += no_include_pwd
 CONFIG += thread
 CONFIG += static
-QT += network
+QT += network webkit
 greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += webkit webkitwidgets
+    QT += webkitwidgets
     DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 }
 

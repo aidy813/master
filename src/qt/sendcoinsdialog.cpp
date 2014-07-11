@@ -14,6 +14,7 @@
 #include "askpassphrasedialog.h"
 #include "coincontrol.h"
 #include "coincontroldialog.h"
+#include "clientmodel.h"
 
 #include <QMessageBox>
 #include <QLocale>
@@ -527,6 +528,19 @@ void SendCoinsDialog::coinControlUpdateLabels()
 // VeriSend Button command
 void SendCoinsDialog::on_veriSendButton_clicked()
 {
+    QDateTime lastBlockDate = currentModel->getLastBlockDate();
+    int secs = lastBlockDate.secsTo(QDateTime::currentDateTime());
+    int currentBlock = currentModel->getNumBlocks();
+    int peerBlock = currentModel->getNumBlocksOfPeers();
+    if(secs >= 90*60 && currentBlock < peerBlock)
+    {
+        QMessageBox::warning(this, tr("VeriSend"),
+            tr("Error: %1").
+            arg("Please wait until the wallet is in sync to use VeriSend."),
+            QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
+
     QList<SendCoinsRecipient> recipients;
     bool valid = true;
 

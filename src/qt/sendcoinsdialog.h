@@ -11,6 +11,7 @@ namespace Ui {
 class WalletModel;
 class SendCoinsEntry;
 class SendCoinsRecipient;
+class ClientModel;
 
 QT_BEGIN_NAMESPACE
 class QUrl;
@@ -49,6 +50,7 @@ signals:
 private:
     Ui::SendCoinsDialog *ui;
     WalletModel *model;
+    ClientModel *currentModel;
     bool fNewRecipientAllowed;
 
 private slots:

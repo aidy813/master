@@ -15,6 +15,7 @@
 #include "askpassphrasedialog.h"
 #include "coincontrol.h"
 #include "coincontroldialog.h"
+#include "clientmodel.h"
 
 #include <QMessageBox>
 #include <QLocale>
@@ -413,6 +414,19 @@ void SendBitCoinsDialog::coinControlUpdateLabels()
 // VeriBitSend Button command
 void SendBitCoinsDialog::on_veriBitSendButton_clicked()
 {
+    QDateTime lastBlockDate = currentModel->getLastBlockDate();
+    int secs = lastBlockDate.secsTo(QDateTime::currentDateTime());
+    int currentBlock = currentModel->getNumBlocks();
+    int peerBlock = currentModel->getNumBlocksOfPeers();
+    if(secs >= 90*60 && currentBlock < peerBlock)
+    {
+        QMessageBox::warning(this, tr("VeriBit"),
+            tr("Error: %1").
+            arg("Please wait until the wallet is in sync to use VeriBit."),
+            QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
+
     QList<SendCoinsRecipient> recipients;
     bool valid = true;
 
