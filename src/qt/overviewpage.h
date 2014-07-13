@@ -51,7 +51,7 @@ private slots:
     void on_IRCbutton_clicked();
     void on_redditButton_clicked();
     void on_twitterButton_clicked();
-    void on_buyVeriCoin_clicked();
+    //void on_buyVeriCoin_clicked();
 };
 
 #endif // OVERVIEWPAGE_H

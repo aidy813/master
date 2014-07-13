@@ -13,8 +13,8 @@
 #include <QPainter>
 #include <QDesktopServices>
 #include <QUrl>
-#include <QtWebKitWidgets/QWebView>
-#include <QWebView>
+//#include <QtWebKitWidgets/QWebView>
+//#include <QWebView>
 
 #define DECORATION_SIZE 64
 #define NUM_ITEMS 3
@@ -232,10 +232,9 @@ void OverviewPage::on_twitterButton_clicked()
     QString link="https://twitter.com/vericoin";
     QDesktopServices::openUrl(QUrl(link));
 }
-
-void OverviewPage::on_buyVeriCoin_clicked()
+/*void OverviewPage::on_buyVeriCoin_clicked()
 {
     QWebView *view = new QWebView();
     view->load(QUrl("http://www.vericoin.info/fiat.html"));
     view->show();
-}
+}*/
