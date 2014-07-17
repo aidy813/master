@@ -6,7 +6,7 @@ DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
 CONFIG += no_include_pwd
 CONFIG += thread
 CONFIG += static
-QT += network webkit
+QT += network
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += webkitwidgets
     DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0

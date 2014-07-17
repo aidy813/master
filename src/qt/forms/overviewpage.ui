@@ -237,6 +237,29 @@
        </layout>
       </widget>
      </item>
+     <item alignment="Qt::AlignHCenter">
+      <widget class="QPushButton" name="buyVeriCoin">
+       <property name="minimumSize">
+        <size>
+         <width>165</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Buy VeriCoin</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../bitcoin.qrc">
+         <normaloff>:/icons/staking_on</normaloff>:/icons/staking_on</iconset>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
@@ -394,6 +417,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../bitcoin.qrc"/>
+ </resources>
  <connections/>
 </ui>
